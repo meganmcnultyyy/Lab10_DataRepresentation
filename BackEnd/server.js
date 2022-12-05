@@ -100,7 +100,7 @@ app.get('/api/books', (req, res) => {
 })
 
 app.put('/api/book/:id', (req,res) => { // HTTP put request to the specified path with specified callback function, complete overwrite
-  console.log("Update "+req.params.id);
+  console.log("Update "+req.params.id); // Identify as parameter using :
   
   bookModel.findByIdAndUpdate(req.params.id, req.body, {new: true}, (error, data)=>{
     res.send(data); // sending back data
@@ -111,6 +111,14 @@ app.get('/api/book/:id',(req,res)=>{ // Searching DB for id
     console.log(req.params.id); // Pulling param out of URL
     bookModel.findById(req.params.id,(error, data)=>{ // Find Document with unique id 
         res.json(data); // Sending back JSON
+    })
+})
+
+app.delete('/api/book/:id', (req,res)=>{ // Listen for HTTP request, find book and delete
+    console.log("Deleting Book with the ID: "+req.params.id)
+
+    bookModel.deleteOne({_id:req.params.id}, (error,data)=>{ //Passing id and once deleted send back data/error
+      res.send(data); // returning data
     })
 })
 
